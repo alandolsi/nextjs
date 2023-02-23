@@ -17,6 +17,13 @@ export default function Home() {
 
   const darkModeClass = isDark ? `bg-gray-900 text-white` : `bg-white text-black`;
 
+  // show current time live
+  const [time, setTime] = useState(new Date().toLocaleTimeString());
+
+  setInterval(() => {
+    setTime(new Date().toLocaleTimeString());
+  }, 1000);
+
   return (
     <>
       <Head>
@@ -26,17 +33,21 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className={`${darkModeClass} ${sourceSansPro.className} h-screen`}>
-        <main className='mx-auto mx-7xl p-4'>
-          <h1 className='text-4xl font-bold'>Hello World</h1>
-          <button
-            className={
-              isDark
-                ? `bg-white text-gray-900 font-bold py-2 px-4 rounded`
-                : `bg-gray-900 text-white font-bold py-2 px-4 rounded`
-            }
-            onClick={toggleDarkMode}>
-            Toggle Dark Mode
-          </button>
+        <main>
+          <div className='mx-auto mx-7xl p-4'>
+            <button
+              className={
+                isDark
+                  ? `bg-white text-gray-900 font-bold py-2 px-4 rounded`
+                  : `bg-gray-900 text-white font-bold py-2 px-4 rounded`
+              }
+              onClick={toggleDarkMode}>
+              Toggle Dark Mode
+            </button>
+            <div className='flex justify-center items-center'>
+              <p className='text-6xl font-bold'>{time}</p>
+            </div>
+          </div>
         </main>
       </main>
     </>
