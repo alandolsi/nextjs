@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
+import Image from "next/image";
 import { Source_Sans_Pro } from "@next/font/google";
 
 const sourceSansPro = Source_Sans_Pro({
@@ -10,6 +11,7 @@ const sourceSansPro = Source_Sans_Pro({
 
 export default function Home() {
   const [isDark, setIsDark] = useState(false);
+  const [countries, setCountries] = useState<Array<any>>([]);
 
   const toggleDarkMode = () => {
     setIsDark(!isDark);
@@ -23,6 +25,19 @@ export default function Home() {
   setInterval(() => {
     setTime(new Date().toLocaleTimeString());
   }, 1000);
+
+  // fetch countries
+  useEffect(() => {
+    const getAllCountries = async () => {
+      let allCountry = await fetch("https://restcountries.com/v3.1/all");
+      let response: Array<any> = await allCountry.json();
+      if (response) {
+        setCountries(response);
+      }
+    };
+
+    getAllCountries();
+  }, []);
 
   return (
     <>
@@ -46,6 +61,25 @@ export default function Home() {
             </button>
             <div className='flex justify-center items-center'>
               <p className='text-6xl font-bold'>{time}</p>
+            </div>
+          </div>
+          <div>
+            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+              {countries.map((country: any, index: number) => (
+                <div
+                  key={index}
+                  className={`${isDark ? `bg-white text-black border-black` : `bg-black text-white`} p-4 rounded`}>
+                  <Image
+                    src={country.flags.svg}
+                    width={150}
+                    height={100}
+                    alt={country.name.common}
+                    style={{ width: 150, height: 100 }}
+                    priority={true}
+                  />
+                  {country.name.common}
+                </div>
+              ))}
             </div>
           </div>
         </main>
