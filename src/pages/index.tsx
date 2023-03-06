@@ -12,6 +12,8 @@ const sourceSansPro = Source_Sans_Pro({
 export default function Home() {
   const [isDark, setIsDark] = useState(false);
   const [countries, setCountries] = useState<Array<any>>([]);
+  // complete date in german format with weekday
+  const [date, setDate] = useState("");
 
   const toggleDarkMode = () => {
     setIsDark(!isDark);
@@ -21,6 +23,16 @@ export default function Home() {
   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
+    // set date
+    setDate(
+      new Date().toLocaleDateString("de-DE", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    );
+
     setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);
@@ -66,17 +78,17 @@ export default function Home() {
       </Head>
       <main className={`${darkModeClass} ${sourceSansPro.className}`}>
         <div className={`mx-auto mx-7xl p-4`}>
-          <button
-            className={
-              isDark
-                ? `bg-white text-gray-900 font-bold py-2 px-4 rounded`
-                : `bg-gray-900 text-white font-bold py-2 px-4 rounded`
-            }
-            onClick={toggleDarkMode}>
-            Toggle Dark Mode
-          </button>
-          <div className='flex justify-center items-center'>
-            <p className='text-6xl font-bold'>{time}</p>
+          <div className='grid grid-cols-2 my-8'>
+            <button
+              className={`${isDark ? "bg-white text-gray-900" : "bg-gray-900 text-white"} w-48 px-4 py-2 rounded-lg`}
+              onClick={toggleDarkMode}>
+              Toggle Dark Mode
+            </button>
+            <div className='flex justify-center items-center'>
+              <p className='text-6xl font-bold'>
+                {date} - {time}
+              </p>
+            </div>
           </div>
 
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
