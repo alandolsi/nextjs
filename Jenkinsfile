@@ -18,7 +18,7 @@ pipeline {
                 checkout scm
             }
         }
-        satge ('Build') {
+        stage ('Build') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE:$GIT_COMMIT .'
                 sh 'echo $DOCKER_IMAGE:$GIT_COMMIT'
