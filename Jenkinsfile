@@ -15,7 +15,7 @@ pipeline {
     stages {
         stage ('Checkout') {
             steps {
-                env.GIT_COMMIT = checkout(scm).GIT_COMMIT
+                checkout scm
             }
         }
         // satge ('Build') {
