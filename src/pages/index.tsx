@@ -18,25 +18,42 @@ export default function Home() {
   };
 
   const darkModeClass = isDark ? `bg-gray-900 text-white` : `bg-white text-black`;
-
-  // show current time live
   const [time, setTime] = useState(new Date().toLocaleTimeString());
 
-  setInterval(() => {
-    setTime(new Date().toLocaleTimeString());
-  }, 1000);
-
-  // fetch countries
   useEffect(() => {
-    const getAllCountries = async () => {
+    setInterval(() => {
+      setTime(new Date().toLocaleTimeString());
+    }, 1000);
+  }, []);
+
+  // store api request in local storage
+  useEffect(() => {
+    // check if data is already in local storage
+    if (localStorage.getItem("countries")) {
+      return;
+    }
+
+    const getData = async () => {
       let allCountry = await fetch("https://restcountries.com/v3.1/all");
       let response: Array<any> = await allCountry.json();
       if (response) {
-        setCountries(response);
+        localStorage.setItem("countries", JSON.stringify(response));
       }
     };
+    getData();
+  }, []);
 
-    getAllCountries();
+  // get data from local storage
+  useEffect(() => {
+    const getData = async () => {
+      let allCountry = await JSON.parse(localStorage.getItem("countries") || "[]");
+      if (allCountry) {
+        console.log(allCountry);
+
+        setCountries(allCountry);
+      }
+    };
+    getData();
   }, []);
 
   return (
@@ -47,42 +64,41 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className={`${darkModeClass} ${sourceSansPro.className} h-screen`}>
-        <main>
-          <div className='mx-auto mx-7xl p-4'>
-            <button
-              className={
-                isDark
-                  ? `bg-white text-gray-900 font-bold py-2 px-4 rounded`
-                  : `bg-gray-900 text-white font-bold py-2 px-4 rounded`
-              }
-              onClick={toggleDarkMode}>
-              Toggle Dark Mode
-            </button>
-            <div className='flex justify-center items-center'>
-              <p className='text-6xl font-bold'>{time}</p>
-            </div>
+      <main className={`${darkModeClass} ${sourceSansPro.className}`}>
+        <div className={`mx-auto mx-7xl p-4`}>
+          <button
+            className={
+              isDark
+                ? `bg-white text-gray-900 font-bold py-2 px-4 rounded`
+                : `bg-gray-900 text-white font-bold py-2 px-4 rounded`
+            }
+            onClick={toggleDarkMode}>
+            Toggle Dark Mode
+          </button>
+          <div className='flex justify-center items-center'>
+            <p className='text-6xl font-bold'>{time}</p>
           </div>
-          <div>
-            <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
-              {countries.map((country: any, index: number) => (
-                <div
-                  key={index}
-                  className={`${isDark ? `bg-white text-black border-black` : `bg-black text-white`} p-4 rounded`}>
-                  <Image
-                    src={country.flags.svg}
-                    width={150}
-                    height={100}
-                    alt={country.name.common}
-                    style={{ width: 150, height: 100 }}
-                    priority={true}
-                  />
-                  {country.name.common}
-                </div>
-              ))}
-            </div>
+
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+            {countries.map((country: any, index: number) => (
+              <div
+                key={index}
+                className={`flex items-center p-4 rounded-lg ${
+                  isDark ? "bg-white text-gray-900" : "bg-gray-900 text-white"
+                }`}>
+                <Image
+                  src={country.flags.svg}
+                  width={150}
+                  height={100}
+                  alt={country.name.common}
+                  style={{ width: 150, height: 100 }}
+                  priority={true}
+                />
+                <p className='text-xl font-bold'>{country.name.common}</p>
+              </div>
+            ))}
           </div>
-        </main>
+        </div>
       </main>
     </>
   );
