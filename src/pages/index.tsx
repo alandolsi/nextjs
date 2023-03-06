@@ -95,9 +95,7 @@ export default function Home() {
             {countries.map((country: any, index: number) => (
               <div
                 key={index}
-                className={`flex items-center p-4 rounded-lg ${
-                  isDark ? "bg-white text-gray-900" : "bg-gray-900 text-white"
-                }`}>
+                className={`rounded-lg p-4 ${isDark ? "bg-white text-gray-900" : "bg-gray-900 text-white"}`}>
                 <Image
                   src={country.flags.svg}
                   width={150}
