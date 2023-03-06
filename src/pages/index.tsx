@@ -105,6 +105,7 @@ export default function Home() {
                   priority={true}
                 />
                 <p className='text-xl font-bold'>{country.name.common}</p>
+                <p>test</p>
               </div>
             ))}
           </div>
