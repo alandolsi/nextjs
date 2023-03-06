@@ -1,6 +1,6 @@
 // nextjs app
 pipeline {
-    agent { label 'node' }
+    agent any
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
         disableConcurrentBuilds()
