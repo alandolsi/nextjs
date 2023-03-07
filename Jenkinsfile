@@ -4,8 +4,8 @@ pipeline {
     environment {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
-        IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = 'latest'
+        // IMAGE_NAME = 'nextjs'
+        // IMAGE_TAG = 'latest'
     }
     stages {
         stage ('SCM Checkout') {
@@ -14,10 +14,15 @@ pipeline {
             }
         }
         stage ('Build') {
+            environment {
+                IMAGE_TAG = 'build-${env.BUILD_NUMBER}'
+                IMAGE_NAME = 'nextjs'
+            }
             steps {
                 bat 'docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .'
-                bat 'docker tag ${env.IMAGE_NAME}:${env.IMAGE_TAG} ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
-                bat 'docker push ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
+                // bat 'docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .'
+                // bat 'docker tag ${env.IMAGE_NAME}:${env.IMAGE_TAG} ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
+                // bat 'docker push ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
             }
         }
 
