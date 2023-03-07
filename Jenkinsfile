@@ -15,9 +15,8 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                bat 'printenv'
-                bat 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
-                bat 'docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}'
+                bat 'docker build -t nextjs:latest .'
+                bat 'docker tag nextjs:latest ldiiso/nextjs:latest'
             }
         }
 
