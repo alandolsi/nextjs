@@ -1,18 +1,20 @@
 // nextjs app
 pipeline {
     agent any
-
+    environment {
+        DOCKER_REGISTRY = 'docker.io'
+        DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
+    }
     stages {
-        stage ('Checkout') {
+        stage ('SCM Checkout') {
             steps {
                 checkout scm
             }
         }
         stage ('Build') {
             steps {
-                bat 'echo "Building..."'
-                bat 'npm install'
-                bat 'npm run build'
+                bat 'docker build -t $DOCKER_REGISTRY/$DOCKER_REGISTRY_CREDENTIALS/nextjs .'
+
             }
         }
 
