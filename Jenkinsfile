@@ -43,7 +43,7 @@ pipeline {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
                         docker stack deploy -c docker-compose.yml nextjs
-                        echo "Deployed"
+                        echo "Deployed T"
                     '''
                 }
             }
