@@ -1,6 +1,6 @@
 // nextjs app
 pipeline {
-    agent { dockerfile true }
+    agent any
     environment {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
