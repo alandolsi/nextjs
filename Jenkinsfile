@@ -13,7 +13,7 @@ pipeline {
                 checkout scm
             }
         }
-        stage "Env Variables" {
+        stage ("Env Variables") {
             steps {
                 echo "DOCKER_REGISTRY: ${env.DOCKER_REGISTRY}"
                 echo "DOCKER_REGISTRY_CREDENTIALS: ${env.DOCKER_REGISTRY_CREDENTIALS}"
