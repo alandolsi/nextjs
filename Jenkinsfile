@@ -23,7 +23,7 @@ pipeline {
         }
         stage('Push image') {
             steps {
-                withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
                         docker build -t nextjs:latest .
                         docker tag nextjs:latest ldiiso/nextjs:latest
@@ -34,10 +34,8 @@ pipeline {
         }
         stage ('Deploy localy') {
             steps {
-                withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
-                        // docker pull ldiiso/nextjs:latest
-                        // docker run -d -p 3000:3000 ldiiso/nextjs:latest
                         docker stack deploy -c docker-compose.yml nextjs
                     '''
                 }
