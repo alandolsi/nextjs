@@ -2,8 +2,11 @@
 pipeline {
     agent any
     environment {
-        DOCKER_REGISTRY = 'docker.io'
+        DOCKER_REGISTRY = 'docker.io/ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
+
+        IMAGE_NAME = 'nextjs'
+        IMAGE_TAG = 'latest'
     }
     stages {
         stage ('SCM Checkout') {
@@ -13,8 +16,8 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                bat 'docker build -t $DOCKER_REGISTRY/$DOCKER_REGISTRY_CREDENTIALS/nextjs .'
-
+                bat 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'
+                bat 'docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}'
             }
         }
 
