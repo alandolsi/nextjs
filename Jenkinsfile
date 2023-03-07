@@ -21,17 +21,26 @@ pipeline {
                 echo "IMAGE_TAG: ${env.IMAGE_TAG}"
             }
         }
-        stage ('Build') {
-            withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "https://index.docker.io/v1/" ]) {
-                steps {
-                    bat '''
+        stage('Push image') {
+            withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                bat '''
                     docker build -t nextjs:latest .
                     docker tag nextjs:latest ldiiso/nextjs:latest
                     docker push ldiiso/nextjs:latest
                 '''
-                }
             }
         }
+        // stage ('Build') {
+        //     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "https://index.docker.io/v1/" ]) {
+        //         steps {
+        //             bat '''
+        //             docker build -t nextjs:latest .
+        //             docker tag nextjs:latest ldiiso/nextjs:latest
+        //             docker push ldiiso/nextjs:latest
+        //         '''
+        //         }
+        //     }
+        // }
 
     }
 }
