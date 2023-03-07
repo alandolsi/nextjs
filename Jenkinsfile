@@ -32,5 +32,17 @@ pipeline {
                 }
             }
         }
+        stage ('Deploy localy') {
+            steps {
+                withDockerRegistry([ credentialsId: "dockerhub", url: "" ]) {
+                    bat '''
+                        // docker pull ldiiso/nextjs:latest
+                        // docker run -d -p 3000:3000 ldiiso/nextjs:latest
+                        docker stack deploy -c docker-compose.yml nextjs
+                    '''
+                }
+            }
+        }
+
     }
 }
