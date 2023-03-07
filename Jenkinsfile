@@ -21,6 +21,13 @@ pipeline {
                 echo "IMAGE_TAG: ${env.IMAGE_TAG}"
             }
         }
+        stage ('Build') {
+            steps {
+                bat 'docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .'
+                bat 'docker tag ${env.IMAGE_NAME}:${env.IMAGE_TAG} ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
+                bat 'docker push ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
+            }
+        }
         // stage ('Build') {
         //     steps {
         //         bat 'docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .'
