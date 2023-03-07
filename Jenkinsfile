@@ -22,12 +22,14 @@ pipeline {
             }
         }
         stage ('Build') {
-            steps {
-                bat '''
+            withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "https://index.docker.io/v1/" ]) {
+                steps {
+                    bat '''
                     docker build -t nextjs:latest .
                     docker tag nextjs:latest ldiiso/nextjs:latest
                     docker push ldiiso/nextjs:latest
                 '''
+                }
             }
         }
 
