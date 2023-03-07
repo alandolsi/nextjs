@@ -17,6 +17,7 @@ pipeline {
             steps {
                 bat 'docker build -t nextjs:latest .'
                 bat 'docker tag nextjs:latest ldiiso/nextjs:latest'
+                bat 'docker push ldiiso/nextjs:latest'
             }
         }
 
