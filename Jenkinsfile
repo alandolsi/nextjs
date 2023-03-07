@@ -32,6 +32,12 @@ pipeline {
                 }
             }
         }
+        stage ('Promotion') {
+            agent none
+            steps {
+                input message: 'Promote to production?', ok: 'Yes'
+            }
+        }
         stage ('Deploy localy') {
             steps {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
