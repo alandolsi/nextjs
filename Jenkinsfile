@@ -24,7 +24,9 @@ pipeline {
         stage ('Build') {
             steps {
                 bat '''
-                    docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} .
+                    docker build -t nextjs:latest .
+                    docker tag nextjs:latest ldiiso/nextjs:build-${env.BUILD_NUMBER}
+                    docker push ldiiso/nextjs:build-${env.BUILD_NUMBER}
                 '''
             }
         }
