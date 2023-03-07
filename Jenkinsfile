@@ -1,6 +1,6 @@
 // nextjs app
 pipeline {
-    agent any
+    agent { dockerfile true }
     environment {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
@@ -23,9 +23,9 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                bat 'docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .'
-                bat 'docker tag ${env.IMAGE_NAME}:${env.IMAGE_TAG} ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
-                bat 'docker push ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
+                // bat 'docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .'
+                // bat 'docker tag ${env.IMAGE_NAME}:${env.IMAGE_TAG} ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
+                // bat 'docker push ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}'
             }
         }
         // stage ('Build') {
