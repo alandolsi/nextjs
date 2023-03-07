@@ -91,7 +91,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+          {/* <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
             {countries.map((country: any, index: number) => (
               <div
                 key={index}
@@ -108,7 +108,7 @@ export default function Home() {
                 <p>test</p>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </main>
     </>
