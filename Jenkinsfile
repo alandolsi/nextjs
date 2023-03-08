@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage ('SCM Checkout') {
             steps {
-                env.GIT_COMMIT = checkout(scm).GIT_COMMIT[0..10]
+                checkout scm
             }
         }
         stage ('Build image') {
