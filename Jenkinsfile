@@ -2,6 +2,9 @@
 pipeline {
     agent any
     options {
+        skipDefaultCheckout()
+        disableConcurrentBuilds()
+        buildDiscarder logRotator(daysToKeepStr: '30')
         ansiColor('xterm')
     }
     environment {
