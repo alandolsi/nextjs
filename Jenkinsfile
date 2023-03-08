@@ -51,8 +51,14 @@ pipeline {
                         docker rmi ldiiso/nextjs:latest
                         docker pull ldiiso/nextjs:latest
                         docker stack deploy -c docker-compose.yml nextjs
-                        echo "\033[32mDeployed\033[0m"
                     '''
+                }
+            }
+            post {
+                success {
+                    echo '\033[32m######################################################################################\033[0m'
+                    echo '\033[32mDeployed\033[0m'
+                    echo '\033[32m######################################################################################\033[0m'
                 }
             }
         }
