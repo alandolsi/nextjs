@@ -52,7 +52,7 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
-                        docker stack deploy -c docker-compose.yml nextjs
+                        docker-compose -f docker-compose.yml up -d
                     '''
                 }
             }
