@@ -8,7 +8,7 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = 'latest'
+        IMAGE_TAG = ${GIT_COMMIT:-latest}
     }
     stages {
         stage ('test') {
@@ -16,32 +16,32 @@ pipeline {
                 echo 'test'
             }
         }
-        // stage ('SCM Checkout') {
-        //     steps {
-        //         checkout scm
-        //     }
-        // }
-        // stage ('Build image') {
-        //     steps {
-        //             echo '\033[34m######################################################################################\033[0m'
-        //             withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-        //                 bat '''
-        //                 docker build -t nextjs:latest .
-        //                 docker tag nextjs:latest ldiiso/nextjs:latest
-        //                 '''
-        //             }
-        //             echo '\033[34m######################################################################################\033[0m'
-        //     }
-        //     post {
-        //         success {
-        //             echo '\033[35m######################################################################################\033[0m'
-        //             withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-        //                 bat ''' docker push ldiiso/nextjs:latest'''
-        //             }
-        //             echo '\033[35m######################################################################################\033[0m'
-        //         }
-        //     }
-        // }
+        stage ('SCM Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage ('Build image') {
+            steps {
+                    echo '\033[34m######################################################################################\033[0m'
+                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+                        bat '''
+                        docker build -t ${env.IMAGE_NAME}:${IMAGE_TAG} .
+                        docker tag ${env.IMAGE_NAME}:${IMAGE_TAG} ldiiso/${env.IMAGE_NAME}:${IMAGE_TAG}
+                        '''
+                    }
+                    echo '\033[34m######################################################################################\033[0m'
+            }
+            // post {
+            //     success {
+            //         echo '\033[35m######################################################################################\033[0m'
+            //         withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+            //             bat ''' docker push ldiiso/nextjs:latest'''
+            //         }
+            //         echo '\033[35m######################################################################################\033[0m'
+            //     }
+            // }
+        }
         // stage ('Promotion') {
         //     agent none
         //     steps {
