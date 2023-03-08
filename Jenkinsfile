@@ -27,6 +27,7 @@ pipeline {
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
                             docker-compose -f docker-compose.yml build
+
                         '''
                     }
                     echo '\033[34m######################################################################################\033[0m'
