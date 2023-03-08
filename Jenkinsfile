@@ -1,8 +1,8 @@
 // nextjs app
 pipeline {
     agent any
-    options	 {
-        ansicolor('xterm')
+    options {
+        ansiColor('xterm')
     }
     environment {
         DOCKER_REGISTRY = 'ldiiso'
