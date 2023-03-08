@@ -6,6 +6,7 @@ volumes:
 services:
   app:
     image: ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT:-latest}
+    build: .
     ports:
       - target: 3000
         published: 3000
