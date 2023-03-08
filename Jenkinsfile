@@ -1,7 +1,7 @@
 // nextjs app
 pipeline {
     agent any
-    optionms {
+    options	 {
         ansicolor('xterm')
     }
     environment {
