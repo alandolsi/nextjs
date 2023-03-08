@@ -15,15 +15,18 @@ pipeline {
         }
         stage ('Build image') {
             steps {
-                withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                    bat '''
-                        docker-compose -f docker-compose.yml build
-                    '''
-                }
+                docker-compose -f docker-compose.yml build
             }
             post {
                 success {
-                    echo 'Build success'
+
+                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+                    bat '''
+                        docker-compose -f docker-compose.yml push
+                    '''
+                }
+
+
                 }
             }
         }
