@@ -13,8 +13,7 @@ pipeline {
     stages {
         stage ('SCM Checkout') {
             steps {
-                env.GIT_COMMIT = checkout(scm).GIT_COMMIT[0..10]
-                echo "GIT_COMMIT: ${env.GIT_COMMIT}"
+                checkout scm
             }
         }
         stage ('Build image') {
@@ -30,12 +29,13 @@ pipeline {
             }
             post {
                 success {
-
+                    echo '\033[35mStart Push Project\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
                             docker-compose -f docker-compose.yml push
                         '''
                     }
+                    echo '\033[35mProject Pushed successfully!\033[0m'
                 }
             }
         }
