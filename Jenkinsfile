@@ -19,7 +19,7 @@ pipeline {
             steps {
                     echo '\033[34m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                            writeFile file: './docker/ssl/isoadca.crt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
+                            writeFile file: '/usr/src/app/isoadca.crt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
 
