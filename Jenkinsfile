@@ -15,7 +15,9 @@ pipeline {
         }
         stage ('Build image') {
             steps {
-                docker-compose -f docker-compose.yml build
+                bat '''
+                    docker-compose -f docker-compose.yml build
+                '''
             }
             post {
                 success {
