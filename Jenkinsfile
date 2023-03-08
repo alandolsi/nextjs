@@ -12,22 +12,18 @@ pipeline {
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
         IMAGE_TAG = '${GIT_COMMIT:-latest}'
+        ISOADCA = 'isoadca'
     }
     stages {
-        stage ('test') {
-            steps {
-                echo 'test'
-            }
-        }
-        stage ('SCM Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage ('Build image') {
             steps {
                     echo '\033[34m######################################################################################\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+                        withCredentials(file(credentialsId: '${env.ISOADCA}', variable: 'ISOADCA_SSL_CERT_SECRET_FILE')) {
+                            bat '''
+                             cp ${ISOADCA_SSL_CERT_SECRET_FILE} ./docker/ssl/isoadca.crt
+                            '''
+                        }
                         bat '''
                             docker-compose -f docker-compose.yml build
 
