@@ -60,8 +60,6 @@ export default function Home() {
     const getData = async () => {
       let allCountry = await JSON.parse(localStorage.getItem("countries") || "[]");
       if (allCountry) {
-        console.log(allCountry);
-
         setCountries(allCountry);
       }
     };
@@ -77,21 +75,28 @@ export default function Home() {
         <link rel='icon' href='/favicon.ico' />
       </Head>
       <main className={`${darkModeClass} ${sourceSansPro.className}`}>
-        <div className={`mx-auto mx-7xl p-4`}>
-          <div className='grid grid-cols-2 my-8'>
-            <button
-              className={`${isDark ? "bg-white text-gray-900" : "bg-gray-900 text-white"} w-48 px-4 py-2 rounded-lg`}
-              onClick={toggleDarkMode}>
-              Toggle Dark Mode
-            </button>
-            <div className='flex justify-center items-center'>
-              <p className='text-6xl font-bold'>
-                {date} - {time}
-              </p>
+        <div className={`container mx-auto mx-7xl p-4`}>
+          <div className='grid grid-cols-1 sm:grid-cols-2 my-8'>
+            <div className='grid-span-1'>
+              <button
+                className={`${
+                  isDark
+                    ? "bg-white text-gray-900 w-48 px-4 py-2 rounded-lg"
+                    : "bg-gray-900 text-white w-48 px-4 py-2 rounded-lg"
+                } w-48 px-4 py-2 rounded-lg`}
+                onClick={toggleDarkMode}>
+                Toggle Dark Mode
+              </button>
+            </div>
+            <div className='grid-span-1'>
+              <div className='flex justify-start md:justify-end items-center'>
+                <p className='text-1xl mt-4 sm:text-2xl sm:mt-0 font-bold'>
+                  {date} - {time}
+                </p>
+              </div>
             </div>
           </div>
-
-          {/* <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
+          <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
             {countries.map((country: any, index: number) => (
               <div
                 key={index}
@@ -105,10 +110,9 @@ export default function Home() {
                   priority={true}
                 />
                 <p className='text-xl font-bold'>{country.name.common}</p>
-                <p>test</p>
               </div>
             ))}
-          </div> */}
+          </div>
         </div>
       </main>
     </>

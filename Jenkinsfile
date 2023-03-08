@@ -42,6 +42,10 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
+                        // docker remove old container
+                        docker service rm nextjs_app
+                        // docker remove old image
+                        docker rmi ldiiso/nextjs:latest
                         docker stack deploy -c docker-compose.yml nextjs
                         echo "Deployed T"
                     '''
