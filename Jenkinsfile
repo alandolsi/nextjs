@@ -8,7 +8,7 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = 'build-${env.BUILD_NUMBER}'
+        IMAGE_TAG = 'latest'
     }
     stages {
         stage ('SCM Checkout') {
@@ -22,8 +22,8 @@ pipeline {
                     echo '\033[34m######################################################################################\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
-                        docker build -t ${IMAGE_NAME}:latest .
-                        docker tag nextjs:latest ldiiso/nextjs:latest
+                        docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .
+                        docker tag ${env.IMAGE_NAME}:${env.IMAGE_TAG} ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}
                         '''
                     }
                     echo '\033[34m######################################################################################\033[0m'
@@ -33,7 +33,7 @@ pipeline {
                     echo '\033[35m######################################################################################\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
-                           docker push ldiiso/nextjs:latest
+                           docker push ${env.DOCKER_REGISTRY}/${env.IMAGE_NAME}:${env.IMAGE_TAG}
                         '''
                     }
                     echo '\033[35m######################################################################################\033[0m'
