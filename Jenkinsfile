@@ -40,22 +40,18 @@ pipeline {
         stage ('Promotion') {
             agent none
             steps {
-                input message: '\033[35mPromote to production?\033[0m', ok: '\033[33mYes\033[0m'
+                input message: '\033[35mPromote to production?\033[0m', ok: 'Yes'
             }
         }
         stage ('Deploy localy') {
             steps {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
-                        // docker remove old container
                         docker service rm nextjs_app
-                        // docker remove old image
                         docker rmi ldiiso/nextjs:latest
-                        // docker pull new image
                         docker pull ldiiso/nextjs:latest
-                        // docker deploy new image
                         docker stack deploy -c docker-compose.yml nextjs
-                        echo "Deployed"
+                        echo "\033[32mDeployed\033[0m"
                     '''
                 }
             }
