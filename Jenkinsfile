@@ -32,15 +32,17 @@ pipeline {
                     }
                     echo '\033[34m######################################################################################\033[0m'
             }
-            // post {
-            //     success {
-            //         echo '\033[35m######################################################################################\033[0m'
-            //         withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-            //             bat ''' docker push ldiiso/nextjs:latest'''
-            //         }
-            //         echo '\033[35m######################################################################################\033[0m'
-            //     }
-            // }
+            post {
+                success {
+                    echo '\033[35m######################################################################################\033[0m'
+                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+                        bat '''
+                            docker-compose -f docker-compose.yml push
+                        '''
+                    }
+                    echo '\033[35m######################################################################################\033[0m'
+                }
+            }
         }
         // stage ('Promotion') {
         //     agent none
