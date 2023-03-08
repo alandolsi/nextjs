@@ -26,8 +26,10 @@ pipeline {
                     echo '\033[34m######################################################################################\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
-                        docker build -t '${env.IMAGE_NAME}:${IMAGE_TAG}' .
-                        docker tag '${env.IMAGE_NAME}:${IMAGE_TAG}' 'ldiiso/${env.IMAGE_NAME}:${IMAGE_TAG}'
+                        echo ${env.IMAGE_TAG}
+                        docker rmi ${env.IMAGE_NAME}:${IMAGE_TAG}
+                        docker build -t ${env.IMAGE_NAME}:${IMAGE_TAG} .
+                        // docker tag ${env.IMAGE_NAME}:${IMAGE_TAG} ldiiso/${env.IMAGE_NAME}:${IMAGE_TAG}
                         '''
                     }
                     echo '\033[34m######################################################################################\033[0m'
