@@ -46,8 +46,11 @@ pipeline {
                         docker service rm nextjs_app
                         // docker remove old image
                         docker rmi ldiiso/nextjs:latest
+                        // docker pull new image
+                        docker pull ldiiso/nextjs:latest
+                        // docker deploy new image
                         docker stack deploy -c docker-compose.yml nextjs
-                        echo "Deployed T"
+                        echo "Deployed"
                     '''
                 }
             }
