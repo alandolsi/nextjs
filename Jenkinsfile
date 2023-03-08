@@ -1,6 +1,9 @@
 // nextjs app
 pipeline {
     agent any
+    optionms {
+        ansicolor('xterm')
+    }
     environment {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
@@ -10,11 +13,12 @@ pipeline {
     stages {
         stage ('SCM Checkout') {
             steps {
-                checkout scm
+                env.GIT_COMMIT = checkout(scm).GIT_COMMIT[0..10]
             }
         }
         stage ('Build image') {
             steps {
+                     echo '\033[34mHello\033[0m \033[33mcolorful\033[0m \033[35mworld!\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
                                 docker-compose -f docker-compose.yml build
