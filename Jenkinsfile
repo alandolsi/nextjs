@@ -17,7 +17,10 @@ pipeline {
     stages {
         stage('Set environment variable') {
             steps {
-                bat '''set MY_VAR=my_value'''
+                bat '''
+                set IMAGE_NAME=%IMAGE_NAME%:%IMAGE_TAG%
+                echo %IMAGE_NAME%
+                '''
             }
         }
         stage('Print environment variable') {
