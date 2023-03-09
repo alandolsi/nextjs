@@ -12,35 +12,12 @@ const sourceSansPro = Source_Sans_Pro({
 export default function Home() {
   const [isDark, setIsDark] = useState(false);
   const [countries, setCountries] = useState<Array<any>>([]);
-  // complete date in german format with weekday
-  // const [date, setDate] = useState("");
 
   const toggleDarkMode = () => {
     setIsDark(!isDark);
   };
 
-  const darkModeClass = isDark ? `bg-gray-900 text-white` : `bg-white text-black`;
-  // const [time, setTime] = useState(new Date().toLocaleTimeString());
-
-  // useEffect(() => {
-  //   // set date
-  //   setDate(
-  //     new Date().toLocaleDateString("de-DE", {
-  //       weekday: "long",
-  //       year: "numeric",
-  //       month: "long",
-  //       day: "numeric",
-  //     })
-  //   );
-
-  //   setInterval(() => {
-  //     setTime(new Date().toLocaleTimeString());
-  //   }, 1000);
-  // }, []);
-
-  // store api request in local storage
   useEffect(() => {
-    // check if data is already in local storage
     if (localStorage.getItem("countries")) {
       return;
     }
@@ -55,7 +32,6 @@ export default function Home() {
     getData();
   }, []);
 
-  // get data from local storage
   useEffect(() => {
     const getData = async () => {
       let allCountry = await JSON.parse(localStorage.getItem("countries") || "[]");
@@ -74,7 +50,7 @@ export default function Home() {
         <meta name='viewport' content='width=device-width, initial-scale=1' />
         <link rel='icon' href='/favicon.ico' />
       </Head>
-      <main className={`${darkModeClass} ${sourceSansPro.className}`}>
+      <main className={`${sourceSansPro.className}`}>
         <div className={`container mx-auto mx-7xl p-4`}>
           <div className='grid grid-cols-1 sm:grid-cols-2 my-8'>
             <div className='grid-span-1'>
@@ -87,13 +63,6 @@ export default function Home() {
                 } w-48 px-4 py-2 rounded-lg`}>
                 {isDark ? "Light Mode" : "Dark Mode"}
               </button>
-            </div>
-            <div className='grid-span-1'>
-              <div className='flex justify-start md:justify-end items-center'>
-                {/* <p className='text-1xl mt-4 sm:text-2xl sm:mt-0 font-bold'>
-                  {date} - {time}
-                </p> */}
-              </div>
             </div>
           </div>
           <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4'>
