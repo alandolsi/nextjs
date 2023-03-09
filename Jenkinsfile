@@ -20,6 +20,7 @@ pipeline {
                 bat '''
                 set DOCKER_IMAGE=%IMAGE_NAME%:%IMAGE_TAG%
                 echo %DOCKER_IMAGE%
+                echo %IMAGE_TAG%
                 '''
             }
         }
