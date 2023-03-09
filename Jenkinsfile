@@ -24,32 +24,32 @@ pipeline {
                 '''
             }
         }
-        // stage ('Build image') {
-        //     steps {
-        //             echo '\033[34m######################################################################################\033[0m'
-        //             withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-        //                 writeFile file: 'test.txt', text: "ISOADCA_SSL_CERT_SECRET_FILE: ${ISOADCA_SSL_CERT_SECRET_FILE}"
-        //             }
+        stage ('Build image') {
+            steps {
+                    echo '\033[34m######################################################################################\033[0m'
+                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
+                        writeFile file: 'test.txt', text: "ISOADCA_SSL_CERT_SECRET_FILE: ${ISOADCA_SSL_CERT_SECRET_FILE}"
+                    }
 
-        //             bat '''
-        //                     docker build -t ldiiso/nextjs:1.0.2 .
-        //                 '''
+                    bat '''
+                            docker build -t %DOCKER_IMAGE% .
+                        '''
 
 
-        //             echo '\033[34m######################################################################################\033[0m'
-        //     }
-        //     post {
-        //         success {
-        //             echo '\033[35m######################################################################################\033[0m'
-        //             withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-        //                 bat '''
-        //                     docker push ldiiso/nextjs:1.0.2
-        //                 '''
-        //             }
-        //             echo '\033[35m######################################################################################\033[0m'
-        //         }
-        //     }
-        // }
+                    echo '\033[34m######################################################################################\033[0m'
+            }
+            post {
+                success {
+                    echo '\033[35m######################################################################################\033[0m'
+                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+                        bat '''
+                            docker push ldiiso/nextjs:1.0.2
+                        '''
+                    }
+                    echo '\033[35m######################################################################################\033[0m'
+                }
+            }
+        }
         // stage ('Promotion') {
         //     agent none
         //     steps {
