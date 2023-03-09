@@ -6,7 +6,9 @@ volumes:
 services:
   app:
     image: ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - target: 3000
         published: 3000
