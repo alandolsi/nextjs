@@ -8,11 +8,15 @@ pipeline {
         ansiColor('xterm')
     }
     environment {
-        DOCKER_REGISTRY = 'ldiiso'
+        // DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
-        IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = '1.0.2'
+        // IMAGE_NAME = 'nextjs'
+        // IMAGE_TAG = '1.0.2'
         ISOADCA = 'isoadca'
+    }
+    parameters {
+        string(name: 'IMAGE_TAG', defaultValue: '1.0.2', description: 'Image tag')
+        string(name: 'IMAGE_NAME', defaultValue: 'nextjs', description: 'Image name')
     }
     stages {
         stage('Set environment variable') {
@@ -32,7 +36,7 @@ pipeline {
                     }
 
                     bat '''
-                            docker build -t ldiiso/nextjs:1.0.2 .
+                            docker build -t ldiiso/nextjs:$IMAGE_TAG .
                         '''
 
 
