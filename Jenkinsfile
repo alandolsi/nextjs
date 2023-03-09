@@ -21,7 +21,7 @@ pipeline {
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                             // writeFile file: '/usr/src/app/isoadca.crt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                             bat '''
-                                copy /Y %ISOADCA_SSL_CERT_SECRET_FILE% /usr/src/app/isoadca.crt
+                                copy %ISOADCA_SSL_CERT_SECRET_FILE% /usr/src/app/isoadca.crt
                             '''
                     }
 
