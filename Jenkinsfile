@@ -20,9 +20,7 @@ pipeline {
                     echo '\033[34m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: 'isoadCA.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
-                        bat '''
-                            xcopy isoadCA.cert C:\\ProgramData\\Docker\\certs.d\\isoadCA.cert /Y
-                        '''
+                        fileCopyOperation includes: 'isoadCA.cert', remote: '/etc/ssl/certs/isoadCA.cert'
                     }
                     bat '''
                             docker build -t ldiiso/nextjs:1.0.3 .
