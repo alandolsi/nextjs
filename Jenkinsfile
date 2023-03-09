@@ -21,13 +21,13 @@ pipeline {
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                             writeFile file: '/usr/src/app/isoadca.crt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
-                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
 
-                        bat '''
+                    bat '''
+                            docker build -t ldiiso/nextjs:1.0.0 .
+                            docker push ldiiso/nextjs:1.0.0
                             docker-compose -f docker-compose.yml build
 
                         '''
-                    }
                     echo '\033[34m######################################################################################\033[0m'
             }
             post {

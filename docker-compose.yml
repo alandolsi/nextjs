@@ -5,10 +5,7 @@ volumes:
 
 services:
   app:
-    image: ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: ldiiso/nextjs:1.0.0
     ports:
       - target: 3000
         published: 3000
