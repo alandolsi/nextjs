@@ -52,7 +52,7 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
-                        docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                        docker pull ldiiso/nextjs:1.0.0
                         docker-compose -f docker-compose.yml up -d --build
                     '''
                 }
