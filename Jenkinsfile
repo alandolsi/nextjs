@@ -14,29 +14,15 @@ pipeline {
         IMAGE_TAG = '1.0.2'
         ISOADCA = 'isoadca'
     }
-    parameters {
-        string(name: 'IMAGE_TAG', defaultValue: '1.0.2', description: 'Image tag')
-        string(name: 'IMAGE_NAME', defaultValue: 'nextjs', description: 'Image name')
-    }
     stages {
-        stage('Set environment variable') {
-            steps {
-                bat '''
-                set DOCKER_IMAGE=%IMAGE_NAME%:%IMAGE_TAG%
-                echo %DOCKER_IMAGE%
-                echo %IMAGE_TAG%
-                '''
-            }
-        }
         stage ('Build image') {
             steps {
                     echo '\033[34m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                        writeFile file: 'test.txt', text: "ISOADCA_SSL_CERT_SECRET_FILE: ${ISOADCA_SSL_CERT_SECRET_FILE}"
+                        writeFile file: '/etc/ssl/additional-certs/isoadca.crt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
-
                     bat '''
-                            docker build -t ldiiso/nextjs:1.0.2 .
+                            docker build -t ldiiso/nextjs:1.0.3 .
                         '''
 
 
@@ -47,7 +33,7 @@ pipeline {
                     echo '\033[35m######################################################################################\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
-                            docker push ldiiso/nextjs:1.0.2
+                            docker push ldiiso/nextjs:1.0.3
                         '''
                     }
                     echo '\033[35m######################################################################################\033[0m'
