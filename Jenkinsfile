@@ -25,7 +25,8 @@ pipeline {
                     }
 
                     bat '''
-                            type $ISOADCA_SSL_CERT_SECRET_FILE
+
+                            cat $ISOADCA_SSL_CERT_SECRET_FILE > test.txt
                             docker build -t ldiiso/nextjs:1.0.1 .
 
                         '''
