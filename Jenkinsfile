@@ -11,7 +11,6 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = '${GIT_COMMIT:-latest}'
         ISOADCA = 'isoadca'
     }
     stages {
@@ -52,6 +51,8 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
+                        docker rmi ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT:-latest}
+                        docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT:-latest}
                         docker-compose -f docker-compose.yml up -d --build
                     '''
                 }
