@@ -18,14 +18,9 @@ pipeline {
         stage('Set environment variable') {
             steps {
                 bat '''
-                set IMAGE_NAME=%IMAGE_NAME%:%IMAGE_TAG%
-                echo %IMAGE_NAME%
+                set DOCKER_IMAGE=%IMAGE_NAME%:%IMAGE_TAG%
+                echo %DOCKER_IMAGE%
                 '''
-            }
-        }
-        stage('Print environment variable') {
-            steps {
-                echo "MY_VAR is ${env.MY_VAR}"
             }
         }
         // stage ('Build image') {
