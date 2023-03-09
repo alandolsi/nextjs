@@ -50,6 +50,8 @@ pipeline {
             steps {
                 withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                     bat '''
+                        docker stack rm nextjs
+                        docker pull ldiiso/nextjs:1.0.0
                         docker stack deploy -c docker-compose.yml nextjs
                     '''
                 }
