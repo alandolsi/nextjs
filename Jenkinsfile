@@ -32,7 +32,7 @@ pipeline {
                     }
 
                     bat '''
-                            docker build -t %DOCKER_IMAGE% .
+                            docker build -t ldiiso/nextjs:1.0.2 .
                         '''
 
 
