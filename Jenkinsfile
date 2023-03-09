@@ -19,7 +19,7 @@ pipeline {
             steps {
                     echo '\033[34m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                        writeFile file: '/etc/ssl/certs/isoadca.crt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
+                        writeFile file: 'test2.txt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
                     bat '''
                             docker build -t ldiiso/nextjs:1.0.3 .
