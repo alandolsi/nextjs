@@ -36,7 +36,7 @@ pipeline {
                     }
 
                     bat '''
-                            docker build -t ldiiso/nextjs:${IMAGE_TAG} .
+                            docker build -t ldiiso/nextjs:1.0.2 .
                         '''
 
 
