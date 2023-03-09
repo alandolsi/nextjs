@@ -21,7 +21,7 @@ pipeline {
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: 'isoadCA.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                         bat '''
-                            xcopy isoadCA.cert  /etc/ssl/certs/isoadCA.cert
+                            xcopy isoadCA.cert C:\\ProgramData\\Docker\\certs.d\\isoadCA.cert /Y
                         '''
                     }
                     bat '''
