@@ -20,7 +20,7 @@ pipeline {
                     echo '\033[34m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         bat '''
-                            type ${ISOADCA_SSL_CERT_SECRET_FILE}
+                            type $ISOADCA_SSL_CERT_SECRET_FILE
                             docker build -t ldiiso/nextjs:1.0.1 .
 
                         '''
