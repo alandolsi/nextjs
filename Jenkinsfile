@@ -11,38 +11,46 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = '1.0.1'
+        IMAGE_TAG = '1.0.2'
         ISOADCA = 'isoadca'
     }
     stages {
-        stage ('Build image') {
+        stage('Set environment variable') {
             steps {
-                    echo '\033[34m######################################################################################\033[0m'
-                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                        writeFile file: 'test.txt', text: "ISOADCA_SSL_CERT_SECRET_FILE: ${ISOADCA_SSL_CERT_SECRET_FILE}"
-                    }
-
-                    bat '''
-                            cat $ISOADCA_SSL_CERT_SECRET_FILE > test.txt
-                            docker build -t ldiiso/nextjs:1.0.1 .
-
-                        '''
-
-
-                    echo '\033[34m######################################################################################\033[0m'
-            }
-            post {
-                success {
-                    echo '\033[35m######################################################################################\033[0m'
-                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                        bat '''
-                            docker push ldiiso/nextjs:1.0.1
-                        '''
-                    }
-                    echo '\033[35m######################################################################################\033[0m'
-                }
+                bat 'set MY_VAR=my_value'
             }
         }
+        stage('Print environment variable') {
+            steps {
+                echo "MY_VAR is ${env.MY_VAR}"
+            }
+        }
+        // stage ('Build image') {
+        //     steps {
+        //             echo '\033[34m######################################################################################\033[0m'
+        //             withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
+        //                 writeFile file: 'test.txt', text: "ISOADCA_SSL_CERT_SECRET_FILE: ${ISOADCA_SSL_CERT_SECRET_FILE}"
+        //             }
+
+        //             bat '''
+        //                     docker build -t ldiiso/nextjs:1.0.2 .
+        //                 '''
+
+
+        //             echo '\033[34m######################################################################################\033[0m'
+        //     }
+        //     post {
+        //         success {
+        //             echo '\033[35m######################################################################################\033[0m'
+        //             withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+        //                 bat '''
+        //                     docker push ldiiso/nextjs:1.0.2
+        //                 '''
+        //             }
+        //             echo '\033[35m######################################################################################\033[0m'
+        //         }
+        //     }
+        // }
         // stage ('Promotion') {
         //     agent none
         //     steps {
