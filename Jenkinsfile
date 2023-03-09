@@ -17,7 +17,7 @@ pipeline {
     stages {
         stage('Set environment variable') {
             steps {
-                bat 'set MY_VAR=my_value'
+                bat '''set MY_VAR=my_value'''
             }
         }
         stage('Print environment variable') {
