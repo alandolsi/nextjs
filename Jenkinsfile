@@ -8,10 +8,10 @@ pipeline {
         ansiColor('xterm')
     }
     environment {
-        // DOCKER_REGISTRY = 'ldiiso'
+        DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
-        // IMAGE_NAME = 'nextjs'
-        // IMAGE_TAG = '1.0.2'
+        IMAGE_NAME = 'nextjs'
+        IMAGE_TAG = '1.0.2'
         ISOADCA = 'isoadca'
     }
     parameters {
