@@ -19,14 +19,16 @@ pipeline {
             steps {
                     echo '\033[34m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                        bat '''
+                        writeFile file: '\\Jenkins_Home\\workspace\\nextjs\\test.txt', text: '''
+                            type $ISOADCA_SSL_CERT_SECRET_FILE
+                        '''
+                    }
+
+                    bat '''
                             type $ISOADCA_SSL_CERT_SECRET_FILE
                             docker build -t ldiiso/nextjs:1.0.1 .
 
                         '''
-
-                            // writeFile file: '/usr/src/app/isoadca.crt', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
-                    }
 
 
                     echo '\033[34m######################################################################################\033[0m'
