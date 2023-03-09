@@ -24,8 +24,6 @@ pipeline {
 
                     bat '''
                             docker build -t ldiiso/nextjs:1.0.0 .
-                            docker push ldiiso/nextjs:1.0.0
-                            docker-compose -f docker-compose.yml build
 
                         '''
                     echo '\033[34m######################################################################################\033[0m'
@@ -35,7 +33,7 @@ pipeline {
                     echo '\033[35m######################################################################################\033[0m'
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
-                            docker-compose -f docker-compose.yml push
+                            docker push ldiiso/nextjs:1.0.0
                         '''
                     }
                     echo '\033[35m######################################################################################\033[0m'
