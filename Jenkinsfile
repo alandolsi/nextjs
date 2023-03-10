@@ -15,7 +15,7 @@ pipeline {
         ISOADCA = 'isoadca'
     }
     stages {
-        stage ('Checkout') {
+        stage ('\033[34mCheckout\033[0m') {
             steps {
                 script {
                     echo '\033[34m######################################################################################\033[0m'
