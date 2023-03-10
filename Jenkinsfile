@@ -15,11 +15,11 @@ pipeline {
         ISOADCA = 'isoadca'
     }
     stages {
-        stage ('\033[34mCheckout\033[0m') {
+        stage ('Checkout') {
             steps {
                 script {
                     echo '\033[34m######################################################################################\033[0m'
-                    checkout scm
+                    env.GIT_COMMIT = checkout(scm).GIT_COMMIT[0..10]
                     echo "GIT COMMIT: ${env.GIT_COMMIT}"
                     echo '\033[34m######################################################################################\033[0m'
                 }
@@ -33,7 +33,7 @@ pipeline {
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: 'test/isoadCA.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
-                    bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                    bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT:-latest} ."
 
                     echo '\033[34m######################################################################################\033[0m'
                 }
@@ -44,7 +44,7 @@ pipeline {
                         echo '\033[35m######################################################################################\033[0m'
 
                         withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                            bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+                            bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT:-latest}"
                         }
 
                         echo '\033[35m######################################################################################\033[0m'
@@ -63,7 +63,6 @@ pipeline {
                 script {
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat '''
-                            docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
                             docker stack deploy -c docker-compose.yml nextjs
                         '''
                     }
