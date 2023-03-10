@@ -11,27 +11,22 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = '1.0.2'
+        IMAGE_TAG = '1.0.3'
         ISOADCA = 'isoadca'
     }
     stages {
         stage ('Build image') {
             steps {
+                script {
                     echo '\033[34m######################################################################################\033[0m'
+
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                        writeFile file: 'isoadCA.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
-
+                        writeFile file: 'test/isoadCA.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
-                    bat '''
-                        mkdir -p /etc/ssl/additional-certs
-                        copy isoadCA.cert /etc/ssl/additional-certs
-                    '''
-                    bat '''
-                            docker build -t ldiiso/nextjs:1.0.3 .
-                        '''
-
+                    bat "docker build -t ldiiso/nextjs:${IMAGE_TAG} ."
 
                     echo '\033[34m######################################################################################\033[0m'
+                }
             }
             post {
                 success {
