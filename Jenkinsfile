@@ -32,7 +32,7 @@ pipeline {
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: 'test/isoadCA.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
-                    bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT:-latest} ."
+                    bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
 
                     echo '\033[31m######################################################################################\033[0m'
                 }
@@ -43,7 +43,7 @@ pipeline {
                         echo '\033[35m######################################################################################\033[0m'
 
                         withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                            bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT:-latest}"
+                            bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                         }
 
                         echo '\033[35m######################################################################################\033[0m'
