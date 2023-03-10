@@ -11,7 +11,7 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = '1.0.3'
+        IMAGE_TAG = '${GIT_COMMIT:-latest}'
         ISOADCA = 'isoadca'
     }
     stages {
