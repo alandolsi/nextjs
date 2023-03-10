@@ -42,27 +42,29 @@ pipeline {
                 }
             }
         }
-        // stage ('Promotion') {
-        //     agent none
-        //     steps {
-        //         input message: '\033[35mPromote to production?\033[0m', ok: 'Yes'
-        //     }
-        // }
-        // stage ('Deploy localy') {
-        //     steps {
-        //         withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-        //             bat '''
-        //                 docker pull ldiiso/nextjs:1.0.0
-        //                 docker stack deploy -c docker-compose.yml nextjs
-        //             '''
-        //         }
-        //     }
-        //     post {
-        //         success {
-        //             echo '\033[32mDeployed Successfully!\033[0m'
-        //         }
-        //     }
-        // }
+        stage ('Promotion') {
+            agent none
+            steps {
+                input message: '\033[35mPromote to production?\033[0m', ok: 'Yes'
+            }
+        }
+        stage ('Deploy localy') {
+            steps {
+                script {
+                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+                        bat '''
+                            docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                            docker stack deploy -c docker-compose.yml nextjs
+                        '''
+                    }
+                }
+            }
+            post {
+                success {
+                    echo '\033[32mDeployed Successfully!\033[0m'
+                }
+            }
+        }
 
     }
 }
