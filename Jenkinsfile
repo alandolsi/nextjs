@@ -11,10 +11,20 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        IMAGE_TAG = ${GIT_COMMIT:-latest}
+        IMAGE_TAG = 'latest'
         ISOADCA = 'isoadca'
     }
     stages {
+        stage ('Checkout') {
+            steps {
+                script {
+                    echo '\033[34m######################################################################################\033[0m'
+                    checkout scm
+                    echo "GIT COMMIT: ${GIT_COMMIT}"
+                    echo '\033[34m######################################################################################\033[0m'
+                }
+            }
+        }
         stage ('Build image') {
             steps {
                 script {
