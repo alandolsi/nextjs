@@ -28,10 +28,10 @@ pipeline {
             steps {
                 script {
                     echo '\033[31m######################################################################################\033[0m'
-                    env.ISOADCA_SSL_CERT_SECRET_NAME = 'isoadCa.cert'
-                    bat 'echo %ISOADCA_SSL_CERT_SECRET_NAME%'
-                    env.ISOADCA_SSL_CERT_SECRET_FILE = '/var/jenkins_home/workspace/nextjs/isoadCa.cert'
-                    bat 'echo %ISOADCA_SSL_CERT_SECRET_FILE%'
+                    // env.ISOADCA_SSL_CERT_SECRET_NAME = 'isoadCa.cert'
+                    // bat 'echo %ISOADCA_SSL_CERT_SECRET_NAME%'
+                    // env.ISOADCA_SSL_CERT_SECRET_FILE = '/var/jenkins_home/workspace/nextjs/isoadCa.cert'
+                    // bat 'echo %ISOADCA_SSL_CERT_SECRET_FILE%'
 
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: test.txt, text: ISOADCA_SSL_CERT_SECRET_FILE
