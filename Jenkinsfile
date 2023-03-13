@@ -12,7 +12,7 @@ pipeline {
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
         IMAGE_TAG = 'latest'
-        ISOADCA = 'isoadca'
+        ISOADCA = "isoadCa"
     }
     stages {
         stage ('Checkout') {
@@ -29,8 +29,8 @@ pipeline {
                 script {
                     echo '\033[31m######################################################################################\033[0m'
 
-                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                        writeFile file: 'isoadCA.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
+                    withCredentials([file(credentialsId: ${env.ISOADCA}, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
+                        writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
                     bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
 
@@ -64,7 +64,7 @@ pipeline {
                         bat "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                         bat "docker stop ${IMAGE_NAME}"
                         bat "docker rm ${IMAGE_NAME}"
-                        bat "docker run -d --name ${IMAGE_NAME} -p 3303:3000 ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
+                        bat "docker run -d --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                     }
                 }
             }
