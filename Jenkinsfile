@@ -36,32 +36,18 @@ pipeline {
                             bat "type ${ISOADCA_SSL_CERT_SECRET_FILE} > ${ISOADCA_SSL_CERT_SECRET_FILE}.pem"
                         }
                     }
-                    // bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
                     bat " docker-compose -f docker-compose.yml build"
 
                     echo '\033[31m######################################################################################\033[0m'
                 }
             }
-            post {
-                success {
-                    script {
-                        echo '\033[35m######################################################################################\033[0m'
-
-                        // withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                        //     bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
-                        // }
-
-                        echo '\033[35m######################################################################################\033[0m'
-                    }
-                }
-            }
         }
-        stage ('Promotion') {
-            agent none
-            steps {
-                input message: '\033[36mPromote to production?\033[0m', ok: 'Yes'
-            }
-        }
+        // stage ('Promotion') {
+        //     agent none
+        //     steps {
+        //         input message: '\033[36mPromote to production?\033[0m', ok: 'Yes'
+        //     }
+        // }
         stage ('Deploy localy') {
             steps {
                 script {
