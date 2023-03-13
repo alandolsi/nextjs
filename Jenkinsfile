@@ -30,9 +30,8 @@ pipeline {
                     echo '\033[31m######################################################################################\033[0m'
 
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                       writeFile file: ISOADCA_SSL_CERT_SECRET_FILE, text: ISOADCA_SSL_CERT_SECRET_FILE
-
-                       bat "dir /s"
+                        writeFile file: ISOADCA_SSL_CERT_SECRET_FILE, text: ISOADCA_SSL_CERT_SECRET_FILE
+                        bat "dir /s"
                     }
                     bat " docker-compose -f docker-compose.yml build"
 
@@ -40,18 +39,10 @@ pipeline {
                 }
             }
         }
-        // stage ('Promotion') {
-        //     agent none
-        //     steps {
-        //         input message: '\033[36mPromote to production?\033[0m', ok: 'Yes'
-        //     }
-        // }
         stage ('Deploy localy') {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                        bat "docker-compose -f docker-compose.yml up -d"
-                    }
+                    bat "docker-compose -f docker-compose.yml up -d"
                 }
             }
             post {
