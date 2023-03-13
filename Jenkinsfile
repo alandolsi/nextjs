@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script {
                     echo '\033[33m######################################################################################\033[0m'
-                    bat "docker cp isoadCa.cert nextjs:/usr/local/share/ca-certificates/isoadCa.crt"
+                    bat "docker cp isoadCa.cert ${IMAGE_NAME}_app_1:/usr/local/share/ca-certificates/isoadCa.crt"
                     echo '\033[33m######################################################################################\033[0m'
                 }
             }
