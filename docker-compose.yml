@@ -19,8 +19,8 @@ services:
     volumes:
       - next-js-data:/usr/src/app
     secrets:
-      - source: isoadCa
-        target: /opt/app/isoadCa.crt
+      - source: ${ISOADCA_SSL_CERT_SECRET_NAME}
+        target: /opt/app/${ISOADCA_SSL_CERT_SECRET_FILE}
 
 
 
