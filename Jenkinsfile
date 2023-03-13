@@ -47,9 +47,9 @@ pipeline {
                     script {
                         echo '\033[35m######################################################################################\033[0m'
 
-                        withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                            bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
-                        }
+                        // withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
+                        //     bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
+                        // }
 
                         echo '\033[35m######################################################################################\033[0m'
                     }
