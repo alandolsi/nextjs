@@ -20,7 +20,7 @@ services:
       - next-js-data:/usr/src/app
     secrets:
       - source: isoadCa
-        target: isoad-ca.crt
+        target: /opt/app/isoadCa.crt
 
 
 
