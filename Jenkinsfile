@@ -38,8 +38,7 @@ pipeline {
                 }
 
             }
-
-            posts {
+            post {
                 success {
                     bat "docker-compose -f docker-compose.yml push"
                 }
