@@ -40,7 +40,7 @@ pipeline {
             }
             post {
                 success {
-                     script {
+                    script {
                         echo '\033[35m######################################################################################\033[0m'
 
                         withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
@@ -48,7 +48,7 @@ pipeline {
                         }
 
                         echo '\033[35m######################################################################################\033[0m'
-                     }
+                    }
                 }
             }
         }
@@ -62,7 +62,6 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
-                        bat "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                         bat "docker-compose -f docker-compose.yml up -d"
                      }
                 }
