@@ -33,7 +33,7 @@ pipeline {
                         script {
                             env.ISOADCA_SSL_CERT_SECRET_FILE = readFile ISOADCA_SSL_CERT_SECRET_FILE
 
-                            bat "echo ${ISOADCA_SSL_CERT_SECRET_FILE} > ./ca.crt"
+                            bat "type ${ISOADCA_SSL_CERT_SECRET_FILE} > ${ISOADCA_SSL_CERT_SECRET_FILE}.pem"
                         }
                     }
                     // bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
