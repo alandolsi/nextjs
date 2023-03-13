@@ -43,9 +43,6 @@ pipeline {
                             env.ISOADCA_SSL_CERT_SECRET_NAME = ISOADCA
                             env.ISOADCA_SSL_CERT_SECRET_FILE = ISOADCA_SSL_CERT_SECRET_FILE
 
-                            // show credential file content
-                            bat "cat ${ISOADCA_SSL_CERT_SECRET_FILE}"
-
 
                         }
                         bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
