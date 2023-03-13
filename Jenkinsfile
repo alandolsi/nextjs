@@ -42,7 +42,7 @@ pipeline {
         stage ('Deploy localy') {
             steps {
                 script {
-                    bat "docker-compose -f docker-compose.yml up -d"
+                    bat "docker stack deploy -c docker-compose.yml nextjs"
                 }
             }
             post {
