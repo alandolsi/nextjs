@@ -58,7 +58,8 @@ pipeline {
             steps {
                 script {
                     echo '\033[33m######################################################################################\033[0m'
-                    bat "docker cp isoadCa.cert ${IMAGE_NAME}_app_1:/opt/app/isoadCa.cert"
+                    bat "docker exec -it ${IMAGE_NAME}_app_1 mkdir -p /ect/ssl/additional_certs/"
+                    bat "docker cp isoadCa.cert ${IMAGE_NAME}_app_1:/ect/ssl/additional_certs/isoadCa.cert"
                     echo '\033[33m######################################################################################\033[0m'
                 }
             }
