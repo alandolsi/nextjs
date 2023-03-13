@@ -58,24 +58,5 @@ pipeline {
                 }
             }
         }
-        stage ('copy cert') {
-            steps {
-                script {
-                    echo '\033[36m######################################################################################\033[0m'
-                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                            env.ISOADCA_SSL_CERT_SECRET_NAME = ISOADCA
-                            env.ISOADCA_SSL_CERT_SECRET_FILE = ISOADCA_SSL_CERT_SECRET_FILE
-                            bat "docker cp ${ISOADCA_SSL_CERT_SECRET_FILE} ${IMAGE_NAME}_app.1:/opt/app"
-                        }
-                    echo '\033[36m######################################################################################\033[0m'
-                }
-            }
-            post {
-                success {
-                    echo '\033[37mDeployed Successfully!\033[0m'
-                }
-            }
-        }
-
     }
 }
