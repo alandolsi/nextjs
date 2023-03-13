@@ -11,7 +11,9 @@ volumes:
 services:
   app:
     image: ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}
-    # build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - target: 3000
         published: 3002
