@@ -1,7 +1,8 @@
 #!/usr/bin/env groovy
 
-@Library('pipeline-library@v1.0.0')
-import com.isogruppe.webteam.jenkins.*
+@Library('docker-utils')
+import com.cloudbees.groovy.cps.NonCPS
+
 
 
 pipeline {
