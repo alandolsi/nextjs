@@ -31,7 +31,7 @@ pipeline {
 
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: ISOADCA_SSL_CERT_SECRET_FILE, text: ISOADCA_SSL_CERT_SECRET_FILE
-                        bat "dir /s"
+                        bat "dir ISODCA_SSL_CERT_SECRET_FILE"
                     }
                     bat " docker-compose -f docker-compose.yml build"
 
@@ -42,7 +42,9 @@ pipeline {
         stage ('Deploy localy') {
             steps {
                 script {
-                    bat "docker stack deploy -c docker-compose.yml nextjs"
+                    echo '\033[32m######################################################################################\033[0m'
+                    bat " docker-compose -f docker-compose.yml up -d"
+                    echo '\033[32m######################################################################################\033[0m'
                 }
             }
             post {
