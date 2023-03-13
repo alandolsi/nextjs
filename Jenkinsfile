@@ -1,4 +1,9 @@
-// nextjs app
+#!/usr/bin/env groovy
+
+@Library('pipeline-library@v1.0.0')
+import com.isogruppe.webteam.jenkins.*
+
+
 pipeline {
     agent any
     options {
