@@ -62,7 +62,6 @@ pipeline {
                 script {
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
-                        bat "if (docker ps -a | findstr ${IMAGE_NAME}) { docker stop ${IMAGE_NAME} && docker rm ${IMAGE_NAME} } else { echo 'Image does not exist' }"
                         bat "docker run -d --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                     }
                 }
