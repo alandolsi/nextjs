@@ -31,7 +31,6 @@ pipeline {
 
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: ISOADCA_SSL_CERT_SECRET_FILE, text: ISOADCA_SSL_CERT_SECRET_FILE
-                        bat "dir ISODCA_SSL_CERT_SECRET_FILE"
                     }
                     bat " docker-compose -f docker-compose.yml build"
 
