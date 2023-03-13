@@ -28,9 +28,11 @@ pipeline {
             steps {
                 script {
                     echo '\033[31m######################################################################################\033[0m'
+                    env.ISOADCA_SSL_CERT_SECRET_NAME = 'isoadCa.cert'
+                    env.ISOADCA_SSL_CERT_SECRET_FILE = '/var/jenkins_home/workspace/nextjs/isoadCa.cert'
 
-                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA')]) {
-                        writeFile file: 'isoadCa.cert', text: readFile(ISOADCA)
+                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
+                        writeFile file: ISOADCA_SSL_CERT_SECRET_FILE, text: ISOADCA_SSL_CERT_SECRET_FILE
                         bat "docker-compose -f docker-compose.yml build"
                     }
                     echo '\033[31m######################################################################################\033[0m'
