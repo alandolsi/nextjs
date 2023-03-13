@@ -62,8 +62,9 @@ pipeline {
                 script {
                     withDockerRegistry([ credentialsId: "${env.DOCKER_REGISTRY_CREDENTIALS}", url: "" ]) {
                         bat "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
-                        bat "docker run -d --name ${IMAGE_NAME} -p 3000:3000 ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
-                    }
+
+                        bat "docker-compose  -f docker-compose.yml up -d"
+                     }
                 }
             }
             post {
