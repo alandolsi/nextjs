@@ -11,7 +11,6 @@ volumes:
 services:
   app:
     image: ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}
-    build: ./${IMAGE_NAME}:${GIT_COMMIT}
     ports:
       - target: 3000
         published: 3002

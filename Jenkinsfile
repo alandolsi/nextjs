@@ -30,7 +30,7 @@ pipeline {
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
                         writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
-                        bat "docker-compose -f docker-compose.yml build"
+                        bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} ."
                     }
                 }
 
@@ -40,7 +40,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
-                        bat "docker-compose -f docker-compose.yml push"
+                        bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
             }
