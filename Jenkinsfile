@@ -33,10 +33,7 @@ pipeline {
 
 
                         // write file to workspace
-                        writeFile file: 'isoadCa33.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
-
-
-
+                        writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                         bat "docker-compose -f docker-compose.yml build"
                     }
                     echo '\033[31m######################################################################################\033[0m'
@@ -47,7 +44,9 @@ pipeline {
             steps {
                 script {
                     echo '\033[32m######################################################################################\033[0m'
-                    bat "docker-compose -f docker-compose.yml up -d --build"
+                    // bat "docker-compose -f docker-compose.yml up -d --build"
+                    // deploy with docker swarm
+                    bat "docker stack deploy -c docker-compose.yml ${IMAGE_NAME}"
                     echo '\033[32m######################################################################################\033[0m'
                 }
             }
