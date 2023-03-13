@@ -1,6 +1,12 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'ldiiso/nextjs'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            label 'docker'
+        }
+    }
     options {
         skipDefaultCheckout()
         disableConcurrentBuilds()
@@ -50,6 +56,16 @@ pipeline {
             post {
                 success {
                     echo '\033[37mDeployed Successfully!\033[0m'
+                }
+            }
+        }
+        // copy file to container
+        stage ('Copy file to container') {
+            steps {
+                script {
+                    echo '\033[33m######################################################################################\033[0m'
+                    bat "docker cp isoadCa.cert nextjs:/usr/local/share/ca-certificates/isoadCa.crt"
+                    echo '\033[33m######################################################################################\033[0m'
                 }
             }
         }
