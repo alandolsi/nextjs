@@ -40,7 +40,10 @@ pipeline {
             }
             post {
                 success {
-                    bat "docker-compose -f docker-compose.yml push"
+                    withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
+                         bat "docker-compose -f docker-compose.yml push"
+                    }
+
                 }
             }
 
@@ -49,8 +52,6 @@ pipeline {
             steps {
                 script {
                     echo '\033[32m######################################################################################\033[0m'
-                    // bat "docker-compose -f docker-compose.yml up -d --build"
-                    // deploy with docker swarm
                     bat "docker stack deploy -c docker-compose.yml ${IMAGE_NAME}"
                     echo '\033[32m######################################################################################\033[0m'
                 }
