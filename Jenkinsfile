@@ -38,7 +38,14 @@ pipeline {
                     }
                     echo '\033[31m######################################################################################\033[0m'
                 }
+
             }
+            posts {
+                success {
+                    bat "docker-compose -f docker-compose.yml push"
+                }
+            }
+
         }
         stage ('Deploy localy') {
             steps {
