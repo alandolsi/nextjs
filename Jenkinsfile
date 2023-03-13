@@ -1,10 +1,4 @@
 #!/usr/bin/env groovy
-
-@Library('docker-utils')
-import com.cloudbees.groovy.cps.NonCPS
-
-
-
 pipeline {
     agent any
     options {
@@ -37,7 +31,9 @@ pipeline {
 
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         script {
-                            env.ISOADCA_SSL_CERT_SECRET_NAME = DockerUtils.createSecretFromEnvVar('isoadCa', ISOADCA_SSL_CERT_SECRET_FILE)
+                            env.ISOADCA_SSL_CERT_SECRET_FILE = readFile ISOADCA_SSL_CERT_SECRET_FILE
+
+                            bat "echo ${ISOADCA_SSL_CERT_SECRET_FILE} > ./ca.crt"
                         }
                     }
                     // bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
