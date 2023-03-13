@@ -29,7 +29,7 @@ pipeline {
                 script {
                     echo '\033[31m######################################################################################\033[0m'
 
-                    withCredentials([file(credentialsId: ${env.ISOADCA}, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
+                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
                     }
                     bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
