@@ -33,7 +33,7 @@ pipeline {
 
 
                         // write file to workspace
-                        writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
+                        writeFile file: 'isoadCa33.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
 
 
 
