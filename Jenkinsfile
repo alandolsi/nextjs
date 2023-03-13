@@ -42,7 +42,7 @@ pipeline {
             steps {
                 script {
                     echo '\033[32m######################################################################################\033[0m'
-                    bat " docker stack deploy -c docker-compose.yml nextjs"
+                    bat "docker-compose -f docker-compose.yml up -d --build"
                     echo '\033[32m######################################################################################\033[0m'
                 }
             }
