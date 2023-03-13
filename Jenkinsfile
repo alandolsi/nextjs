@@ -37,9 +37,9 @@ pipeline {
 
                         bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
 
-                        docker.image("${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}").inside {
-                            sh 'cp /isoadCa.cert /opt/app/isoadCa.crt'
-                        }
+                        // docker.image("${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}").inside {
+                        //     sh 'cp /isoadCa.cert /opt/app/isoadCa.crt'
+                        // }
                     }
                 }
 
