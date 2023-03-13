@@ -3,10 +3,10 @@ version: '3.9'
 volumes:
   next-js-data:
 
-secrets:
-  isoadCa:
-    name: ${ISOADCA_SSL_CERT_SECRET_NAME}
-    file: ${ISOADCA_SSL_CERT_SECRET_FILE}
+# secrets:
+#   isoadCa:
+#     name: ${ISOADCA_SSL_CERT_SECRET_NAME}
+#     file: ${ISOADCA_SSL_CERT_SECRET_FILE}
 
 services:
   app:
