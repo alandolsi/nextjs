@@ -35,15 +35,15 @@ pipeline {
                 }
 
             }
-            post {
-                success {
+        }
+        stage ('Push image') {
+            steps {
+                script {
                     withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
                         bat "docker-compose -f docker-compose.yml push"
                     }
-
                 }
             }
-
         }
         // stage ('Deploy localy') {
         //     steps {
