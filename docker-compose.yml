@@ -14,7 +14,7 @@ services:
     build: .
     ports:
       - target: 3000
-        published: 3000
+        published: 3111
         protocol: tcp
         mode: host
     volumes:
