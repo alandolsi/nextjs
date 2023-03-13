@@ -29,10 +29,9 @@ pipeline {
                 script {
                     echo '\033[31m######################################################################################\033[0m'
 
-                    withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
-                        writeFile file: ISOADCA_SSL_CERT_SECRET_FILE, text: ISOADCA_SSL_CERT_SECRET_FILE
+                    withCredentials([file(credentialsId: isoadCa , file: 'isoadCa.cert')]) {
+                        bat "docker-compose -f docker-compose.yml build"
                     }
-                    bat "docker-compose -f docker-compose.yml build"
 
                     echo '\033[31m######################################################################################\033[0m'
                 }
