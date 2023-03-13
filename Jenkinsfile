@@ -42,7 +42,8 @@ pipeline {
                         withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                             env.ISOADCA_SSL_CERT_SECRET_NAME = ISOADCA
                             env.ISOADCA_SSL_CERT_SECRET_FILE = ISOADCA_SSL_CERT_SECRET_FILE
-                            bat "docker cp isoadCa.cert ${IMAGE_NAME}:${GIT_COMMIT}:/isoadCa.cert"
+                            bat "docker exec -it ${IMAGE_NAME}_${IMAGE_NAME}_1 mkdir -p /run/secrets"
+                            bat "docker cp isoadCa.cert ${IMAGE_NAME}:${GIT_COMMIT}:/run/secrets/${ISOADCA_SSL_CERT_SECRET_NAME}"
                         }
                         bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                     }
