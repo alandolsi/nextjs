@@ -45,20 +45,20 @@ pipeline {
                 }
             }
         }
-        // stage ('Deploy localy') {
-        //     steps {
-        //         script {
-        //             echo '\033[32m######################################################################################\033[0m'
-        //             bat "docker stack deploy -c docker-compose.yml ${IMAGE_NAME}"
-        //             echo '\033[32m######################################################################################\033[0m'
-        //         }
-        //     }
-        //     post {
-        //         success {
-        //             echo '\033[37mDeployed Successfully!\033[0m'
-        //         }
-        //     }
-        // }
+        stage ('Deploy localy') {
+            steps {
+                script {
+                    echo '\033[32m######################################################################################\033[0m'
+                    bat "docker stack deploy -c docker-compose.yml ${IMAGE_NAME}"
+                    echo '\033[32m######################################################################################\033[0m'
+                }
+            }
+            post {
+                success {
+                    echo '\033[37mDeployed Successfully!\033[0m'
+                }
+            }
+        }
         // // copy file to container
         // stage ('Copy file to container') {
         //     steps {
