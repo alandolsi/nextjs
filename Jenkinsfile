@@ -38,7 +38,10 @@ pipeline {
         stage ('Push image') {
             steps {
                 script {
-                    withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
+                     withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
+                        withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
+                            env.ISOADCA_SSL_CERT_SECRET_NAME = ISOADCA_SSL_CERT_SECRET_FILE
+                        }
                         bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                     }
                 }
