@@ -33,8 +33,6 @@ pipeline {
                         // copy file to docker build context
                         // bat "cp isoadCa.cert docker/isoadCa.cert"
 
-
-
                         bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
 
                         // docker.image("${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}").inside {
@@ -48,7 +46,7 @@ pipeline {
         stage ('Push image') {
             steps {
                 script {
-                     withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
+                    withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
                         bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
                     }
                 }
