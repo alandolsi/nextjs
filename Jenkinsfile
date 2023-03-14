@@ -28,7 +28,7 @@ pipeline {
 
                 script {
                     // get current stage name
-                    def stageName = getCurrentStageName() ?: 'unknown'
+                    // def stageName = getCurrentStageName() ?: 'unknown'
                     echo '\033[35m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
