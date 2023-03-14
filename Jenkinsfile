@@ -25,8 +25,10 @@ pipeline {
         }
         stage ('Build image') {
             steps {
-                echo '\033[35m######################################################################################\033[0m'
+
                 script {
+                    def stageName = stage.currentlyRunning[0].name
+                    echo '\033[35m##################################${stageName}####################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
                         writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
@@ -39,7 +41,7 @@ pipeline {
 
                     }
                 }
-                echo '\033[35m######################################################################################\033[0m'
+                echo '\033[35m##################################${stageName}####################################################\033[0m'
 
             }
         }
