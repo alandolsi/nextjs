@@ -1,6 +1,12 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'ldiiso/nextjs:latest'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+            label 'docker'
+        }
+    }
     options {
         skipDefaultCheckout()
         disableConcurrentBuilds()
@@ -58,7 +64,19 @@ pipeline {
             }
             post {
                 success {
+                    // copy file from jenkins worksapce to container
+                    bat "docker cp isoadCa ${IMAGE_NAME}_nextjs.1.0:/opt/app/isoadCa"
                     echo '\033[37mDeployed Successfully!\033[0m'
+                }
+            }
+        }
+        // remove build from registry
+        stage ('Remove image') {
+            steps {
+                script {
+                    withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
+                        bat "docker rmi ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
+                    }
                 }
             }
         }
