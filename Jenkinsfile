@@ -29,10 +29,9 @@ pipeline {
                 script {
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
-                        writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
+                        writeFile file: 'isoadCa.cer', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
 
                         bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
-
                     }
                 }
                 echo '\033[35m######################################################################################\033[0m'
