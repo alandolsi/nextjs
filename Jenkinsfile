@@ -54,16 +54,21 @@ pipeline {
         }
         stage ('Deploy localy') {
             steps {
-                script {
-                    echo '\033[34m######################################################################################\033[0m'
-                    bat "docker stack deploy -c docker-compose.yml ${IMAGE_NAME}"
-                    echo '\033[34m######################################################################################\033[0m'
+                echo '\033[34m######################################################################################\033[0m'
+                withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
+                    withCredentials([file(credentialsId: 'isoadCa', variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
+                        script {
+                            env.ISOADCA_SSL_CERT_SECRET_NAME = ISOADCA_SSL_CERT_SECRET_FILE
+                        }
+                        bat "docker stack deploy -c docker-compose.yml ${IMAGE_NAME}"
+                    }
                 }
+                echo '\033[34m######################################################################################\033[0m'
             }
             post {
                 success {
                     // copy file from jenkins worksapce to container
-                    bat "docker cp isoadCa ${IMAGE_NAME}_nextjs.1.0:/opt/app/isoadCa"
+                    // bat "docker cp isoadCa ${IMAGE_NAME}_nextjs.1.0:/opt/app/isoadCa"
                     echo '\033[37mDeployed Successfully!\033[0m'
                 }
             }
