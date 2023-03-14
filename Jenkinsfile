@@ -58,7 +58,7 @@ pipeline {
                 withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
                     withCredentials([file(credentialsId: 'isoadCa', variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         script {
-                            env.ISOADCA_SSL_CERT_SECRET_NAME = bat(returnStdout: true, script: 'openssl base64 -A -in ISOADCA_SSL_CERT_SECRET_FILE')
+                            env.ISOADCA_SSL_CERT_SECRET_NAME = DockerUtils.getVersionedSecretName('isoadCa', readFile(env.ISOADCA_SSL_CERT_SECRET_FILE))
                         }
                         bat "docker stack deploy -c docker-compose.yml ${IMAGE_NAME}"
                     }
