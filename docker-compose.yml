@@ -6,7 +6,7 @@ volumes:
 secrets:
   isoadCa:
     name: ${ISOADCA_SSL_CERT_SECRET_NAME}
-    file:  /etc/ssl/certs/${ISOADCA_SSL_CERT_SECRET_FILE}
+    file: ${ISOADCA_SSL_CERT_SECRET_FILE}
 
 services:
   app:
