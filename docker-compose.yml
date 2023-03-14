@@ -20,7 +20,7 @@ services:
       - next-js-data:/usr/src/app
     secrets:
       - source: isoadCa
-        target: /etc/ssl/certs/isoadCa.cert
+        target: /run/secrets/isoadCa.cert
 
 
 
