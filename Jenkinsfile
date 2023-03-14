@@ -28,7 +28,7 @@ pipeline {
 
                 script {
                     // get current stage name
-                    def stageName = currentBuild.getAncestor(FlowNode).displayName
+                    def stageName = currentBuild.getAncestor(FlowNode.class).displayName
                     echo '\033[35m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
