@@ -1,7 +1,7 @@
 #!/usr/bin/env groovy
 
-@Library('pipeline-library')
-import com.isogruppe.webteam.jenkins.*
+// @Library('pipeline-library')
+// import com.isogruppe.webteam.jenkins.*
 
 pipeline {
     agent any
