@@ -11,7 +11,7 @@ pipeline {
         DOCKER_REGISTRY = 'ldiiso'
         DOCKER_REGISTRY_CREDENTIALS = 'dockerhub'
         IMAGE_NAME = 'nextjs'
-        ISOADCA = "isoadCa"
+        ISOADCA = credentials('isoadCa')
     }
     stages {
         stage ('Checkout') {
@@ -25,18 +25,11 @@ pipeline {
         }
         stage ('Build image') {
             steps {
-
+                echo '\033[35m######################################################################################\033[0m'
                 script {
-                    // get current stage name
-                    // def stageName = getCurrentStageName() ?: 'unknown'
-                    echo '\033[35m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
                         writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
-
-                        env.ISOADCA_SSL_CERT_SECRET_NAME = ISOADCA
-                        env.ISOADCA_SSL_CERT_SECRET_FILE = readFile(ISOADCA_SSL_CERT_SECRET_FILE)
-
 
                         bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT} ."
 
