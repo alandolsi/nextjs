@@ -3,8 +3,6 @@ pipeline {
     agent {
         docker {
             image 'ldiiso/nextjs:latest'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-            label 'docker'
         }
     }
     options {
