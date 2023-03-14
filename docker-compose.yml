@@ -6,7 +6,7 @@ volumes:
 secrets:
   isoadCa:
     name: ${ISOADCA_SSL_CERT_SECRET_NAME}
-    file: ${ISOADCA_SSL_CERT_SECRET_FILE}
+    file:  /etc/ssl/certs/${ISOADCA_SSL_CERT_SECRET_FILE}
 
 services:
   app:
@@ -20,7 +20,8 @@ services:
       - next-js-data:/usr/src/app
     secrets:
       - source: isoadCa
-        target: /run/secrets/isoadCa.cert
+        target: /etc/ssl/certs/isoadCa.cert
+
 
 
 
