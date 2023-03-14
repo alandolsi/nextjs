@@ -27,7 +27,8 @@ pipeline {
             steps {
 
                 script {
-                    def stageName = stage.name
+                    // get current stage name
+                    def stageName = currentBuild.rawBuild.getExecution().getCurrentHeads().get(0).getDisplayName()
                     echo '\033[35m##################################${stageName}####################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
