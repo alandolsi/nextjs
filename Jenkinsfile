@@ -1,10 +1,6 @@
 #!/usr/bin/env groovy
 pipeline {
-    agent {
-        docker {
-            image 'ldiiso/nextjs:latest'
-        }
-    }
+    agent any
     options {
         skipDefaultCheckout()
         disableConcurrentBuilds()
