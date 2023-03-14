@@ -74,14 +74,14 @@ pipeline {
             }
         }
         // remove build from registry
-        stage ('Remove image') {
-            steps {
-                script {
-                    withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
-                        bat "docker rmi ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
-                    }
-                }
-            }
-        }
+        // stage ('Remove image') {
+        //     steps {
+        //         script {
+        //             withDockerRegistry([ credentialsId: DOCKER_REGISTRY_CREDENTIALS, url: ""]) {
+        //                 bat "docker rmi ${DOCKER_REGISTRY}/${IMAGE_NAME}:${GIT_COMMIT}"
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
