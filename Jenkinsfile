@@ -1,6 +1,6 @@
 #!/usr/bin/env groovy
 
-// @Library('pipeline-library')
+@Library('pipeline-library')
 // import com.isogruppe.webteam.jenkins.*
 
 pipeline {
