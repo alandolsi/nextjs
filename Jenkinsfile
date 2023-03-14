@@ -67,7 +67,7 @@ pipeline {
             }
             post {
                 success {
-                    echo '\033[37mDeployed Successfully!\033[0m'
+                    echo '\033[36mDeployed Successfully!\033[0m'
                 }
             }
         }
