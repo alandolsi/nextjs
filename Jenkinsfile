@@ -29,7 +29,7 @@ pipeline {
                 script {
                     // get current stage name
                     def stageName = currentBuild.rawBuild.getExecution().getCurrentHeads().get(0).getDisplayName()
-                    echo '\033[35m##################################${stageName}####################################################\033[0m'
+                    echo '\033[35m######################################################################################\033[0m'
                     withCredentials([file(credentialsId: ISOADCA, variable: 'ISOADCA_SSL_CERT_SECRET_FILE')]) {
                         // write file to workspace
                         writeFile file: 'isoadCa.cert', text: readFile(ISOADCA_SSL_CERT_SECRET_FILE)
@@ -42,7 +42,7 @@ pipeline {
 
                     }
                 }
-                echo '\033[35m##################################${stageName}####################################################\033[0m'
+                echo '\033[35m######################################################################################\033[0m'
 
             }
         }
